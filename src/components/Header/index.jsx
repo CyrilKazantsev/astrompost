@@ -1,13 +1,23 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
-// import MenuIcon from '@mui/icons-material/Menu';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const pages = ['Ваши подписки', 'Рекомендации', 'Личный блог'];
 const settings = ['Профиль', 'Аккаунт', 'Настройки', 'Выход'];
 
-export const Header = () => {
+export const Header = ({onUpdateUser}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const currentUser = useContext(CurrentUserContext)
+
+  // Будущее обновление имени пользователя, которое отображается на сайте
+  function handleClickEditButton(e) {
+    e.preventDefault();
+    toggleTheme();
+    onUpdateUser({
+      name: currentUser.name
+    })
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,7 +46,7 @@ export const Header = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'Raleway', fontSize: "25px"}}
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily:'Nunito', fontSize: "25px"}}
           >
             <h3>ASTROM POSTS</h3>
           </Typography>
@@ -90,17 +100,19 @@ export const Header = () => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 3, color: 'white', display: 'block', color: "black", fontSize: "20px"}}
+                sx={{ my: 3, color: 'white', display: 'block', color: "black", fontSize: "20px", fontFamily:'Nunito'}}
               >
                 {page}
               </Button>
             ))}
           </Box>
-
+          <Box sx={{padding: "10px"}}>
+            <p>{currentUser.name}</p>
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={currentUser.avatar} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -130,7 +142,7 @@ export const Header = () => {
           <Box>
             <Button
               onClick={handleCreatePost}
-              sx={{ my: 3, color: 'white', display: 'block', color: "black", fontSize: "10px"}}
+              sx={{ my: 3, color: 'white', display: 'block', color: "black", fontSize: "10px", fontFamily:'Nunito'}}
             >
               Создать пост
             </Button>

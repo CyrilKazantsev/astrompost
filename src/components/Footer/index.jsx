@@ -9,7 +9,7 @@ export const Footer = () => {
         <div className="footer__wrapper">
           <div className="footer__col">
             <h1 className="footer__copyright">
-              "Astrom Post. Все права незащищены"
+              © "Astrom Post. Все права незащищены"
             </h1>
           </div>
           <div className="footer__col">
