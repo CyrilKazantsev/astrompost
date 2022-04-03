@@ -4,22 +4,38 @@ import { PostsList } from "./components/PostsList";
 import { Header } from "./components/Header";
 import api from "./utilits/Api";
 import { CurrentUserContext } from "./context/CurrentUserContext";
-import { Pagination, Stack } from "@mui/material";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { NotFoundPage } from "./Pages/NotFoundPage/NotFoundPage";
+import { PostPage } from "./Pages/PostPage/PostPage";
+import { FavoritesPage } from "./Pages/FavoritesPage/FavoritesPage";
+import { MyPostsPage } from "./Pages/MyPostsPage/MyPostsPage";
 
 
 export const App = () => {
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  // const [rows, setRows] = useState(10);
-  // Потом будет UseEffect который вызывает setCards
+  const [favorites, setFavorites] = useState([]);
+  const [myPosts, setMyPosts] = useState([])
 
 
-  // Обновление карточек
+  const navigate = useNavigate();
+
+  // Обновление карточек, избранного и постов пользователя
   useEffect(() => {
     Promise.all([api.getPostsList(), api.getUserInfo()]).then(
       ([postData, userData]) => {
         setCards(postData);
         setCurrentUser(userData);
+
+        const favoriteData = postData.filter((item) =>
+        item.likes.some(id => id === userData._id)
+        )
+        setFavorites(favoriteData);
+
+        const myData = postData.filter((item) => {
+          item.author._id === userData._id
+        })
+        setMyPosts(myData);
       }
     );
   }, []);
@@ -30,13 +46,21 @@ export const App = () => {
     });
   }
 
-  // Обновление лайков
+  // Обновление лайков и пополнение списка избранных постов
   function handlePostLike({ _id, likes }) {
     const isLiked = likes.some((id) => id === currentUser._id);
     api.setLikeStatus(_id, isLiked).then((newCard) => {
       const newCardsState = cards.map((c) => {
         return c._id === newCard._id ? newCard : c;
       });
+
+      if(!isLiked){
+        setFavorites(prevState => [...prevState, newCard ])
+      } else {
+        setFavorites(prevState => {
+          return prevState.filter(card => card._id !== newCard._id)
+        })
+      }
 
       setCards(newCardsState);
     });
@@ -57,13 +81,49 @@ export const App = () => {
       <CurrentUserContext.Provider value={currentUser}>
         <Header onUpdateUser={handleUpdateUser} />
         <main className="content container">
-          <div className="content__cards">
-            <PostsList postsData={cards} handlePostLike={handlePostLike} handleDeletePost={handleDeletePost}/>
-          </div>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="content__cards">
+                  <PostsList postsData={cards} handlePostLike={handlePostLike} handleDeletePost={handleDeletePost}/>
+                </div>
+              }
+            />
+            <Route
+                path="/myposts"
+                element={
+                  <MyPostsPage
+                    myPosts={myPosts} 
+                    handlePostLike={handlePostLike} 
+                    handleDeletePost={handleDeletePost}
+                  />
+                }
+              />
+            <Route
+                path="/favorites"
+                element={
+                  <FavoritesPage
+                    favoritesPosts={favorites} 
+                    handlePostLike={handlePostLike} 
+                    handleDeletePost={handleDeletePost}
+                  />
+                }
+              />
+            <Route
+              path="/post/:postID"
+              element={
+                <PostPage
+                  cards={cards}
+                  handlePostLike={handlePostLike}
+                />
+              }
+            />
+            <Route path="*" element={<NotFoundPage  title="Страница не найдена" buttonText="На главную" buttonAction={()=> navigate("/")}/>} />
+          </Routes>
         </main>
         <Footer/>
       </CurrentUserContext.Provider>
-      
     </>
   );
   };

@@ -1,0 +1,70 @@
+.navigation {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: 0;
+    font-weight: 700;
+}
+
+.page_card {
+    width: 800px;
+    cursor: auto;
+    border-style:double;
+    border-color: var(--main-color)
+}
+
+.page_btn {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    font-weight: 800;
+}
+
+.approved {
+    color: rgb(22, 207, 22);
+    display: inline-block;
+    border-style:double;
+    border-color: var(--main-darker);
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.declined {
+    color: red;
+    display: inline-block;
+    border-style:double;
+    border-color: var(--main-lighter);
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.card__favorite-icon {
+	fill: #FFFFFF;
+}
+
+.card__favorite-icon_active {
+	fill: #000000;
+}
+
+.card__favorite {
+	cursor: pointer;
+	background: none;
+	border: none;
+	padding: 0;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+}
+
+.is_deleteable {
+    position: absolute;
+    padding: 5px 15px;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}

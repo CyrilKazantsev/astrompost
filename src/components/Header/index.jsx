@@ -1,23 +1,16 @@
 import React, { useContext } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { Link } from 'react-router-dom';
+import "./style.css"
 
-const pages = ['Ваши подписки', 'Рекомендации', 'Личный блог'];
+const pages = ['Ваши посты', 'Избранное', 'Личный блог'];
 const settings = ['Профиль', 'Аккаунт', 'Настройки', 'Выход'];
 
-export const Header = ({onUpdateUser}) => {
+export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const currentUser = useContext(CurrentUserContext)
-
-  // Будущее обновление имени пользователя, которое отображается на сайте
-  function handleClickEditButton(e) {
-    e.preventDefault();
-    toggleTheme();
-    onUpdateUser({
-      name: currentUser.name
-    })
-  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -48,7 +41,9 @@ export const Header = ({onUpdateUser}) => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily:'Nunito', fontSize: "25px"}}
           >
+            <Link to={"/"} className="card__link">
             <h3>ASTROM POSTS</h3>
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
@@ -60,7 +55,6 @@ export const Header = ({onUpdateUser}) => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {/* <MenuIcon /> */}
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -77,7 +71,7 @@ export const Header = ({onUpdateUser}) => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: 'block', md: 'none'},
               }}
             >
               {pages.map((page) => (
@@ -95,17 +89,70 @@ export const Header = ({onUpdateUser}) => {
           >
             Astrom Posts
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 3, color: 'white', display: 'block', color: "black", fontSize: "20px", fontFamily:'Nunito'}}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <Link to={"/myposts"} className="card__link">
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
+                <Button 
+                  sx={{
+                    display: "inline-block",
+                    color: "black",
+                    padding: "15px 30px",
+                    margin: "10px 20px",
+                    borderRadius: "10px",
+                    textTransform: "uppercase",
+                    letterSpacing: "2px",
+                    backgroundImage: "linear-gradient(to right, #9EEFE1 0%, #33d9b2 51%, #9EEFE1 100%)",
+                    backgroundSize: "100% auto",
+                    boxShadow: "0 0 20px rgba(0, 0, 0, .1)",
+                    transition: ".5s",
+                  }}
+                >
+                  Ваши посты
+                </Button>
+              </Box>
+            </Link> 
+            <Link to={"/favorites"} className="card__link">
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
+                <Button
+                  sx={{
+                    display: "inline-block",
+                    color: "black",
+                    padding: "15px 30px",
+                    margin: "10px 20px",
+                    borderRadius: "10px",
+                    textTransform: "uppercase",
+                    letterSpacing: "2px",
+                    backgroundImage: "linear-gradient(to right, #9EEFE1 0%, #33d9b2 51%, #9EEFE1 100%)",
+                    backgroundSize: "100% auto",
+                    boxShadow: "0 0 20px rgba(0, 0, 0, .1)",
+                    transition: ".5s",
+                  }}
+                >
+                  Избранные посты
+                </Button>
+              </Box>
+            </Link> 
+
+            <Link to={"/"} className="card__link">
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
+                <Button
+                  sx={{
+                    display: "inline-block",
+                    color: "black",
+                    padding: "15px 30px",
+                    margin: "10px 20px",
+                    borderRadius: "10px",
+                    textTransform: "uppercase",
+                    letterSpacing: "2px",
+                    backgroundImage: "linear-gradient(to right, #9EEFE1 0%, #33d9b2 51%, #9EEFE1 100%)",
+                    backgroundSize: "100% auto",
+                    boxShadow: "0 0 20px rgba(0, 0, 0, .1)",
+                    transition: ".5s",
+                  }}
+                >
+                  На главную
+                </Button>
+              </Box>
+            </Link> 
           <Box sx={{padding: "10px"}}>
             <p>{currentUser.name}</p>
           </Box>
@@ -142,7 +189,21 @@ export const Header = ({onUpdateUser}) => {
           <Box>
             <Button
               onClick={handleCreatePost}
-              sx={{ my: 3, color: 'white', display: 'block', color: "black", fontSize: "10px", fontFamily:'Nunito'}}
+              sx={{
+                textDecoration: "none",
+                display: "inline-block",
+                color: "black",
+                padding: "10px 20px",
+                margin: "10px 20px",
+                borderRadius: "10px",
+                textTransform: "uppercase",
+                letterSpacing: "2px",
+                backgroundImage: "linear-gradient(to right, #9EEFE1 0%, #33d9b2 51%, #9EEFE1 100%)",
+                backgroundSize: "100% auto",
+                boxShadow: "0 0 20px rgba(0, 0, 0, .1)",
+                transition: ".5s",
+                fontSize: "10px"
+              }}
             >
               Создать пост
             </Button>

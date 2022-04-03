@@ -13,7 +13,7 @@ class Api {
             headers: {
                 authorization: this._token,
             }
-        }).then(onResponse)
+        }).then(onResponse).catch((err) => console.log(err))
     }
 
     getUserInfo(){
@@ -21,7 +21,7 @@ class Api {
             headers: {
                 authorization: this._token,
             }
-        }).then(onResponse)
+        }).then(onResponse).catch((err) => console.log(err))
     }
 
     setUserInfo(userData){
@@ -32,7 +32,7 @@ class Api {
                 "Content-type": "application/json"
             },
             body: JSON.stringify(userData)
-        }).then(onResponse)
+        }).then(onResponse).catch((err) => console.log(err))
     }
 
     setLikeStatus(postId, isLike){
@@ -41,15 +41,15 @@ class Api {
             headers: {
                 authorization: this._token,
             }
-        }).then(onResponse)
+        }).then(onResponse).catch((err) => console.log(err))
     }
 
     getPostById(postId){
-        return fetch(`${this._baseUrl}/products/${postId}`, {
+        return fetch(`${this._baseUrl}/posts/${postId}`, {
             headers: {
                 authorization: this._token,
             }
-        }).then(onResponse)
+        }).then(onResponse).catch((err) => console.log(err))
     }
 
     deletePostById(postId) {
@@ -58,7 +58,7 @@ class Api {
             headers: {
                 authorization: this._token,
             }
-        }).then(onResponse)
+        }).then(onResponse).catch((err) => console.log(err))
     }
 }
 

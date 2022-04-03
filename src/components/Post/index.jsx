@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
 import "./style.css";
-// import cn from "classnames";
-// import { Button } from "../Button";
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import {ReactComponent as Save} from "./img/save.svg";
 import cn from "classnames";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import api from "../../utilits/Api";
+import { Link } from "react-router-dom";
 
 export const Post = ({title, image, text, likes, handlePostLike, _id, author, handleDeletePost}) => {
   const handleOpenDescription = () => {
-    alert(text)
+    return
   }
   const currentUser = useContext(CurrentUserContext);
   const isLiked = likes.some(id => id === currentUser._id)
@@ -34,11 +32,11 @@ export const Post = ({title, image, text, likes, handlePostLike, _id, author, ha
           {isDeleteable && <div className="deleteButton"><Button onClick={handleDeletePostApp}>Удалить пост</Button></div>}
           {/* <div className="deleteButton"><Button onClick={handleDeletePostApp}>Удалить пост</Button></div> - Это для проверки работы кнопки удаления */} 
           <div>
-            <Button
-              onClick={handleOpenDescription}
-            >
-              Подробнее
-            </Button>
+            <Link to={`/post/${_id}`} className="card__link">
+              <button onClick={handleOpenDescription} className="btn">
+                Подробнее
+              </button>
+            </Link>
           </div>
           <div className="card__sticky card__sticky_type_bottom-right">
             <p>{likes.length}</p>

@@ -6,7 +6,7 @@ export const PostsList = ({postsData, handlePostLike, handleDeletePost}) => {
   return (
       <>
         <div className={s.posts}>
-          {postsData.map( ({__v, ...dataItem}) => { // Так можно избавиться от ненужного поля
+          {postsData?.map( ({__v, ...dataItem}) => {
             return (<Post key={`${dataItem._id}`} {...dataItem} handlePostLike={handlePostLike} handleDeletePost={handleDeletePost}/>)
           })}
         </div>
