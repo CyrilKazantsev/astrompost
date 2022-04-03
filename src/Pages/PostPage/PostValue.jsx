@@ -12,7 +12,7 @@ export const PostValue = ({_id, likes, text, image, title, author, handlePostLik
     const isDeleteable = author._id === currentUser._id
     const isLiked = likes.some(id => id === currentUser._id)
     const navigate = useNavigate();
-
+    console.log(author);
     function handlePostsLike() {
         handlePostLike({_id, likes})
     }
@@ -27,6 +27,14 @@ export const PostValue = ({_id, likes, text, image, title, author, handlePostLik
             </Link>
             <pre> / </pre>
             <p>{title}</p>
+        </div>
+        <div className="user_info">
+            Автор: <br></br>
+            <img className="user_avatar user_info" src={author.avatar} alt="Аватар" />
+            {author.name}
+            <br></br>
+            email: {author.email}
+
         </div>
         <div className="card page_card">
             <img src={image} className="card__image"/>
