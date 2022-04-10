@@ -20,8 +20,7 @@ export function EditPostPage({children, cards}) {
   const {
     register,
     handleSubmit,
-    setValue,
-    formState: { errors },
+    setValue
   } = useForm({
     mode: "onBlur",
   });
@@ -32,18 +31,18 @@ export function EditPostPage({children, cards}) {
 
   const imageRegister = register("image");
 
-//   const tagsRegister = register("tag");
+  const tagsRegister = register("tag");
+
 const handleEditPost = ({title, text, image, tags = ""}) => {
     api.editPost(postID, title, text, image, tags)
         .then(() => navigate(-1))
         .then(() => {
-         setCards();
+         setCards()
         })
         .catch( error => {
             console.log(error);
         })
     }
-
 
   return (
     <Form title="Редактирование поста" onSubmit={handleSubmit(handleEditPost)}>
@@ -51,7 +50,6 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
         {...titleRegister}
         id="title"
         type="text"
-        // value={newCard?.title}
         placeholder="Заголовок"
       />
 
@@ -59,8 +57,6 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
               {...textRegister}
               id="text"
               type="text"
-              
-              // value={newCard?.text}
               placeholder="Описание"
       />
 
@@ -68,8 +64,14 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
         {...imageRegister}
         id="title"
         type="text"
-        // value={newCard?.image}
         placeholder="Ссылка на картинку"
+      />
+
+      <FormInput
+        {...tagsRegister}
+        id="tags"
+        type="text"
+        placeholder="Теги"
       />
 
       {children}
@@ -77,7 +79,10 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
       <FormButton type="submit" color="yellow">
         Редактировать пост
       </FormButton>
-      <Button className="btn" sx={{color: "black", width: "100%", borderRadius: "55px"}} onClick={() => {setValue("title", newCard?.title), setValue("text", newCard?.text), setValue("image", newCard?.image)}}>
+      <Button className="btn" sx={{color: "black", width: "100%", borderRadius: "55px"}} onClick={() => {
+        setValue("title", newCard?.title), 
+        setValue("text", newCard?.text), 
+        setValue("image", newCard?.image)}}>
         Восстановить изначальные данные
       </Button>
     </Form>

@@ -4,7 +4,7 @@
 	flex-direction: column;
 	align-items: center;
     justify-content: space-between;
-	padding: 5px 10px;
+	padding: 25px 10px 0px 10px;
 	border-radius: 10px;
 	cursor: pointer;
 	border-style:double;
@@ -73,3 +73,12 @@
 	justify-content: space-between;
 }
 
+.delete__icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.more {
+	bottom: 0;
+}

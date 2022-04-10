@@ -27,10 +27,6 @@ export const Header = () => {
     setAnchorElUser(null);
   };
 
-  const handleCreatePost = () => {
-    alert("Нажалось!")
-  }
-
   return (
     <AppBar style={{ background: "var(--main-color)", position: "static", color: "black"}}>
       <Container maxWidth="xl">
@@ -81,14 +77,16 @@ export const Header = () => {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            Astrom Posts
-          </Typography>
+          <Link to={"/"} className="card__link">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            >
+              Astrom Posts
+            </Typography>
+          </Link>
           <Link to={"/myposts"} className="card__link">
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
                 <Button 
@@ -188,7 +186,6 @@ export const Header = () => {
           <Link to={"/createpost"} className="card__link">
             <Box>
               <Button
-                onClick={handleCreatePost}
                 sx={{
                   textDecoration: "none",
                   display: "inline-block",

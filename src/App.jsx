@@ -123,7 +123,10 @@ export const App = () => {
             <Route
               path="/createpost"
               element={
-                <CreatePostPage />
+                <CreatePostPage 
+                  cards={cards}
+                  setCards={setCards} 
+                />
               }
             />
             <Route

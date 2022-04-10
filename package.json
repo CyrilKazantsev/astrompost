@@ -10,12 +10,13 @@
     "build:prod": "rimraf ./dist && webpack --mode production --config webpack.config.js",
     "build:dev": "rimraf ./dist && webpack --mode development --config webpack.config.js",
     "start": "webpack serve",
-    "deploy": "rimraf ./dist && yarn build:prod && gh-pages -d dist"
+    "deploy": "yarn build:prod && gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.6.0",
     "@mui/material": "^5.5.1",
     "@mui/styled-engine-sc": "^5.4.2",
     "antd": "^4.19.2",

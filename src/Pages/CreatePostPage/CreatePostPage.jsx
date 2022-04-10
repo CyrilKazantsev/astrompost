@@ -1,12 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { emailRegexp, passwordRegexp } from "../../utilits/utils";
 import { Form } from "../../components/Form";
 import { FormInput } from "../../components/FormInput";
 import { FormButton } from "../../components/FormButton";
 import api from "../../utilits/Api";
+import FormTextarea from "../../components/FormTextarea";
+import { useNavigate } from "react-router-dom";
 
-export function CreatePostPage({children}) {
+export function CreatePostPage({children, setCards}) {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,11 +29,13 @@ export function CreatePostPage({children}) {
     required: "Обязательное поле"
   });
 
-//   const tagsRegister = register("tag");
-const handleCreatePost = ({title, text, image = "", tags = ""}) => {
+  const tagsRegister = register("tag");
+
+  const handleCreatePost = ({title, text, image = "", tags = ""}) => {
     api.createPost(title, text, image, tags)
-        .then(response => {
-            console.log(response);
+        .then(() => navigate("/"))
+        .then(() => {
+          api.getPostsList().then(postsData => setCards(postsData))
         })
         .catch( error => {
             console.log(error);
@@ -54,11 +58,11 @@ const handleCreatePost = ({title, text, image = "", tags = ""}) => {
         )}
       </div>
 
-      <FormInput
-        {...textRegister}
-        id="text"
-        type="text"
-        placeholder="Описание"
+      <FormTextarea
+              {...textRegister}
+              id="text"
+              type="text"
+              placeholder="Описание"
       />
 
       <div>
@@ -69,7 +73,7 @@ const handleCreatePost = ({title, text, image = "", tags = ""}) => {
 
       <FormInput
         {...imageRegister}
-        id="title"
+        id="image"
         type="text"
         placeholder="Ссылка на картинку"
       />
@@ -80,12 +84,12 @@ const handleCreatePost = ({title, text, image = "", tags = ""}) => {
         )}
       </div>
 
-        {/* <FormInput
+        <FormInput
         {...tagsRegister}
         id="title"
         type="text"
         placeholder="Теги"
-      /> */}
+      />
 
       {children}
       
