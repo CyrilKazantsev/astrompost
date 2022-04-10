@@ -4,7 +4,7 @@ import { PostsList } from "../../components/PostsList";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 
 export const MyPostsPage = ({myPosts, handlePostLike, handleDeletePost}) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
       <>
         {myPosts.length !== 0 && <PostsList postsData={myPosts} handlePostLike={handlePostLike} handleDeletePost={handleDeletePost}/>}

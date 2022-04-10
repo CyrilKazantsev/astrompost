@@ -4,20 +4,23 @@ import { Link, useNavigate } from "react-router-dom";
 import "./style.css"
 import {ReactComponent as Save} from "./img/save.svg";
 import cn from "classnames"
+import { Button } from "@mui/material";
 
 
 
-export const PostValue = ({_id, likes, text, image, title, author, handlePostLike}) => {
+
+export const PostValue = ({_id, likes, text, image, title, author, handlePostLike, handleDeletePost}) => {
     const currentUser = useContext(CurrentUserContext);
-    const isDeleteable = author._id === currentUser._id
+    const isDeleteable = author?._id === currentUser._id
     const isLiked = likes.some(id => id === currentUser._id)
     const navigate = useNavigate();
-    console.log(author);
     function handlePostsLike() {
         handlePostLike({_id, likes})
     }
-
   
+    function handleDeletePostApp() {
+        handleDeletePost(author._id, _id)
+    }
 
     return (
     <div className="product">
@@ -28,30 +31,33 @@ export const PostValue = ({_id, likes, text, image, title, author, handlePostLik
             <pre> / </pre>
             <p>{title}</p>
         </div>
-        <div className="user_info">
-            Автор: <br></br>
-            <img className="user_avatar user_info" src={author.avatar} alt="Аватар" />
-            {author.name}
-            <br></br>
-            email: {author.email}
+        <div className="info">
+            <div className="user_info">
+                Автор: <br></br>
+                <img className="user_avatar user_info" src={author.avatar} alt="Аватар" />
+                {author.name}
+                <br></br>
+                email: {author.email}
+            </div>
+            {isDeleteable && <Link to={`/edit/${_id}`} className="card__link">
+                <div>
+                    <Button  sx={{color: "black"}} onClick={() => alert("Нажалось!")} className="btn" >Редактировать пост</Button>
+                </div>
+            </Link>}
 
         </div>
         <div className="card page_card">
             <img src={image} className="card__image"/>
             <p className="card__desc">{title}</p>
-            <div className="bottom__buttons">
-            {isDeleteable && <div className="deleteButton"><Button onClick={handleDeletePostApp}>Удалить пост</Button></div>}
-            {/* <div className="deleteButton"><Button onClick={handleDeletePostApp}>Удалить пост</Button></div> - Это для проверки работы кнопки удаления */} 
-            </div>
             <div className="description">
                 Описание: <br/>
                 {text}
             </div>
-            <div className="is_deleteable">
-                {isDeleteable && <p className="approved">Вы можете удалить пост</p>}
-                {!isDeleteable && <p className="declined">Вы не автор поста и не можете удалить его</p>}
-            </div>
+            {/* <div className="is_deleteable">
+                {isDeleteable && <div className="deleteButton"><Button onClick={handleDeletePost}>Удалить пост</Button></div>}
+            </div> */}
             <div className="buttons">
+                {isDeleteable && <div className="delete_button"><Button sx={{color: "black"}} onClick={handleDeletePostApp} className="btn" >Удалить пост</Button></div>}
                 <button className="card__favorite" onClick={handlePostsLike}>
                     <Save className={cn("card__favorite-icon" , {"card__favorite-icon_active": isLiked})}/> 
                 </button>

@@ -18,7 +18,7 @@
 }
 
 .page_card {
-    width: 800px;
+    width: 1000px;
     cursor: auto;
     border-style:double;
     border-color: var(--main-color)
@@ -64,6 +64,10 @@
 	padding: 0;
 }
 
+.card__image {
+    max-height: 500px;
+}
+
 .buttons {
     display: flex;
     align-items: center;
@@ -79,3 +83,24 @@
     bottom: 0;
     width: 100%;
 }
+
+.delete_button {
+    cursor: pointer;
+    position: absolute;
+    padding: 5px 15px;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    width: 1000px;
+    text-decoration: none;
+}
+
+.card__link {
+    text-decoration: none;
+    color: black;
+}
+

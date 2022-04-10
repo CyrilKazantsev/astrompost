@@ -1,0 +1,23 @@
+.form {
+  width: min-content;
+}
+
+.title {
+  width: 356px;
+  color: #000000;
+  margin: 24px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+}
+
+.infoText {
+  color: #7b8e98;
+  margin: 20px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 14px;
+}

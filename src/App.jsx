@@ -9,6 +9,8 @@ import { NotFoundPage } from "./Pages/NotFoundPage/NotFoundPage";
 import { PostPage } from "./Pages/PostPage/PostPage";
 import { FavoritesPage } from "./Pages/FavoritesPage/FavoritesPage";
 import { MyPostsPage } from "./Pages/MyPostsPage/MyPostsPage";
+import { CreatePostPage } from "./Pages/CreatePostPage/CreatePostPage";
+import { EditPostPage } from "./Pages/EditPostPage/EditPostPage";
 
 
 export const App = () => {
@@ -16,6 +18,7 @@ export const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [favorites, setFavorites] = useState([]);
   const [myPosts, setMyPosts] = useState([])
+  // const [CardsTotal, setCardsTotal] = useState(0)
 
 
   const navigate = useNavigate();
@@ -25,6 +28,8 @@ export const App = () => {
     Promise.all([api.getPostsList(), api.getUserInfo()]).then(
       ([postData, userData]) => {
         setCards(postData);
+        console.log(postData);
+        // setCardsTotal(postData.total);
         setCurrentUser(userData);
 
         const favoriteData = postData.filter((item) =>
@@ -33,7 +38,7 @@ export const App = () => {
         setFavorites(favoriteData);
 
         const myData = postData.filter((item) => {
-          item.author._id === userData._id
+          return item.author?._id === userData._id
         })
         setMyPosts(myData);
       }
@@ -70,7 +75,12 @@ export const App = () => {
   function handleDeletePost(authorId, postId) {
     if (authorId === currentUser._id) {
       api.deletePostById(postId)
-    } else {
+       .then(() => navigate("/"))
+       .then(() => {
+        setCards(prevState => {return prevState.filter(post => post._id !== postId)});
+       })
+       
+      } else {
       alert(`Твой ID - ${currentUser._id}, а автора - ${authorId}. Ты не можешь удалить его пост =(`)
     }
   }
@@ -111,11 +121,26 @@ export const App = () => {
                 }
               />
             <Route
+              path="/createpost"
+              element={
+                <CreatePostPage />
+              }
+            />
+            <Route
+              path="/edit/:postID"
+              element={
+                <EditPostPage 
+                  cards={cards}
+                />
+              }
+            />
+            <Route
               path="/post/:postID"
               element={
                 <PostPage
                   cards={cards}
                   handlePostLike={handlePostLike}
+                  handleDeletePost={handleDeletePost}
                 />
               }
             />

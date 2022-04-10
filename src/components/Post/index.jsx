@@ -6,13 +6,13 @@ import cn from "classnames";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { Link } from "react-router-dom";
 
-export const Post = ({title, image, text, likes, handlePostLike, _id, author, handleDeletePost}) => {
+export const Post = ({title, image, likes, handlePostLike, _id, author, handleDeletePost}) => {
   const handleOpenDescription = () => {
     return
   }
   const currentUser = useContext(CurrentUserContext);
   const isLiked = likes.some(id => id === currentUser._id)
-  const isDeleteable = author._id === currentUser._id
+  const isDeleteable = author?._id === currentUser._id
 
   function handlePostsLike() {
     handlePostLike({_id, likes})

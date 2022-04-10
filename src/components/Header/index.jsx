@@ -185,29 +185,30 @@ export const Header = () => {
               ))}
             </Menu>
           </Box>
-
-          <Box>
-            <Button
-              onClick={handleCreatePost}
-              sx={{
-                textDecoration: "none",
-                display: "inline-block",
-                color: "black",
-                padding: "10px 20px",
-                margin: "10px 20px",
-                borderRadius: "10px",
-                textTransform: "uppercase",
-                letterSpacing: "2px",
-                backgroundImage: "linear-gradient(to right, #9EEFE1 0%, #33d9b2 51%, #9EEFE1 100%)",
-                backgroundSize: "100% auto",
-                boxShadow: "0 0 20px rgba(0, 0, 0, .1)",
-                transition: ".5s",
-                fontSize: "10px"
-              }}
-            >
-              Создать пост
-            </Button>
-          </Box>
+          <Link to={"/createpost"} className="card__link">
+            <Box>
+              <Button
+                onClick={handleCreatePost}
+                sx={{
+                  textDecoration: "none",
+                  display: "inline-block",
+                  color: "black",
+                  padding: "10px 20px",
+                  margin: "10px 20px",
+                  borderRadius: "10px",
+                  textTransform: "uppercase",
+                  letterSpacing: "2px",
+                  backgroundImage: "linear-gradient(to right, #9EEFE1 0%, #33d9b2 51%, #9EEFE1 100%)",
+                  backgroundSize: "100% auto",
+                  boxShadow: "0 0 20px rgba(0, 0, 0, .1)",
+                  transition: ".5s",
+                  fontSize: "10px"
+                }}
+              >
+                Создать пост
+              </Button>
+            </Box>
+          </Link>
         </Toolbar>
       </Container>
     </AppBar>

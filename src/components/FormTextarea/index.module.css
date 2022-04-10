@@ -1,0 +1,21 @@
+.textarea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px 16px;
+  margin: 8px 0px;
+  background: #FFFFFF;
+  resize: none;
+  position: static;
+  width: 100%;
+  min-height: 200px;
+
+  border: 1px solid #CFD8DC;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #FFE44D;
+}
