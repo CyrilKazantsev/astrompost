@@ -3,12 +3,11 @@ import s from"./styles.module.css";
 import NotFoundImage from "./img/cat.svg"
 
 
-export const NotFoundPage = ({children, title, buttonText, buttonAction}) => {
+export const NotFoundPage = ({title, buttonText, buttonAction}) => {
   return (
         <div className={s.notFound}>
             <img src={NotFoundImage} className={s.image} alt="Кот" aria-hidden="true"/>
             <h2 className={s.title}>{title}</h2>
-            {children}
             <button className="btn" onClick={buttonAction}>{buttonText}</button>
         </div>
   );

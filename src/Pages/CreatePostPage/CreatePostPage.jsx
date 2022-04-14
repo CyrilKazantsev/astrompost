@@ -54,48 +54,40 @@ export function CreatePostPage({children, setCards, setMyPosts}) {
         type="text"
         placeholder="Заголовок"
       />
-
       <div>
         {errors?.title && (
           <p className="errorMessage">{errors?.title?.message}</p>
         )}
       </div>
-
       <FormTextarea
               {...textRegister}
               id="text"
               type="text"
               placeholder="Описание"
       />
-
       <div>
         {errors?.text && (
           <p className="errorMessage">{errors?.text?.message}</p>
         )}
       </div>
-
       <FormInput
         {...imageRegister}
         id="image"
         type="url"
         placeholder="Ссылка на картинку"
       />
-
       <div>
         {errors?.image && (
           <p className="errorMessage">{errors?.image?.message}</p>
         )}
       </div>
-
         <FormInput
         {...tagsRegister}
         id="tags"
         type="text"
         placeholder="Теги"
       />
-
       {children}
-      
       <FormButton type="submit" color="yellow">
         Создать пост
       </FormButton>

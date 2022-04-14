@@ -3,13 +3,14 @@ import "./style.css";
 import {ReactComponent as Save} from "./img/save.svg";
 import cn from "classnames";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CancelIcon from '@mui/icons-material/Cancel';
 
 export const Post = ({title, image, likes, handlePostLike, _id, author, handleDeletePost}) => {
   const currentUser = useContext(CurrentUserContext);
   const isLiked = likes.some(id => id === currentUser._id)
   const isDeleteable = author?._id === currentUser._id
+  const navigate = useNavigate();
 
   function handlePostsLike() {
     handlePostLike({_id, likes})

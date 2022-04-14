@@ -56,7 +56,6 @@ const handleEditPost = (data) => {
         defaultValue={newCard?.title}
         placeholder="Заголовок"
       />
-
       <FormTextarea
               {...textRegister}
               id="text"
@@ -64,7 +63,6 @@ const handleEditPost = (data) => {
               defaultValue={newCard?.text}
               placeholder="Описание"
       />
-
       <FormInput
         {...imageRegister}
         id="image"
@@ -72,7 +70,6 @@ const handleEditPost = (data) => {
         defaultValue={newCard?.image}
         placeholder="Ссылка на картинку"
       />
-
       <FormInput
         {...tagsRegister}
         id="tags"
@@ -80,9 +77,7 @@ const handleEditPost = (data) => {
         defaultValue={newCard?.tags}
         placeholder="Теги"
       />
-
       {children}
-      
       <FormButton type="submit" color="yellow">
         Редактировать пост
       </FormButton>

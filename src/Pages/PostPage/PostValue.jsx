@@ -20,6 +20,7 @@ export const PostValue = ({_id, likes, text, image, title, author, handlePostLik
   
     function handleDeletePostApp() {
         handleDeletePost(author._id, _id)
+        navigate(-1)
     }
 
     return (
@@ -53,9 +54,6 @@ export const PostValue = ({_id, likes, text, image, title, author, handlePostLik
                 Описание: <br/>
                 {text}
             </div>
-            {/* <div className="is_deleteable">
-                {isDeleteable && <div className="deleteButton"><Button onClick={handleDeletePost}>Удалить пост</Button></div>}
-            </div> */}
             <div className="buttons">
                 {isDeleteable && <div className="delete_button"><Button sx={{color: "black"}} onClick={handleDeletePostApp} className="btn" >Удалить пост</Button></div>}
                 <button className="card__favorite" onClick={handlePostsLike}>

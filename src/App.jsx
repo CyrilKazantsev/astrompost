@@ -76,18 +76,13 @@ export const App = () => {
   function handleDeletePost(authorId, postId) {
     if (authorId === currentUser._id) {
       api.deletePostById(postId)
-      //  .then(() => navigate("/"))
        .then(() => {
         setCards(prevState => {return prevState.filter(post => post._id !== postId)});
         setFavorites(prevState => {return prevState.filter(post => post._id !== postId)});
         setMyPosts(prevState => {return prevState.filter(post => post._id !== postId)});
        })
-       
-      } else {
-      alert(`Твой ID - ${currentUser._id}, а автора - ${authorId}. Ты не можешь удалить его пост =(`)
-    }
+      }
   }
-  
 
 
   return (
@@ -100,7 +95,10 @@ export const App = () => {
               path="/"
               element={
                 <div className="content__cards">
-                  <PostsList postsData={cards} handlePostLike={handlePostLike} handleDeletePost={handleDeletePost}/>
+                  <PostsList 
+                    postsData={cards} 
+                    handlePostLike={handlePostLike} 
+                    handleDeletePost={handleDeletePost}/>
                 </div>
               }
             />
@@ -155,7 +153,11 @@ export const App = () => {
                 />
               }
             />
-            <Route path="*" element={<NotFoundPage  title="Страница не найдена" buttonText="На главную" buttonAction={()=> navigate("/")}/>} />
+            <Route path="*" element={
+            <NotFoundPage  
+            title="Страница не найдена" 
+            buttonText="На главную" 
+            buttonAction={()=> navigate("/")}/>} />
           </Routes>
         </main>
         <Footer/>
