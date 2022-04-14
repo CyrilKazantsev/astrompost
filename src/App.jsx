@@ -18,7 +18,6 @@ export const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [favorites, setFavorites] = useState([]);
   const [myPosts, setMyPosts] = useState([])
-  // const [CardsTotal, setCardsTotal] = useState(0)
 
 
   const navigate = useNavigate();
@@ -28,8 +27,6 @@ export const App = () => {
     Promise.all([api.getPostsList(), api.getUserInfo()]).then(
       ([postData, userData]) => {
         setCards(postData);
-        console.log(postData);
-        // setCardsTotal(postData.total);
         setCurrentUser(userData);
 
         const favoriteData = postData.filter((item) =>
@@ -44,6 +41,7 @@ export const App = () => {
       }
     );
   }, []);
+  
   // Информация о пользователе
   function handleUpdateUser(userUpdate) {
     api.setUserInfo(userUpdate).then((newUserData) => {
@@ -58,6 +56,9 @@ export const App = () => {
       const newCardsState = cards.map((c) => {
         return c._id === newCard._id ? newCard : c;
       });
+      const newMyPostsData = myPosts.map((c) => {
+        return c._id === newCard._id ? newCard : c;
+      });
 
       if(!isLiked){
         setFavorites(prevState => [...prevState, newCard ])
@@ -66,8 +67,8 @@ export const App = () => {
           return prevState.filter(card => card._id !== newCard._id)
         })
       }
-
       setCards(newCardsState);
+      setMyPosts(newMyPostsData)
     });
   }
 
@@ -75,15 +76,18 @@ export const App = () => {
   function handleDeletePost(authorId, postId) {
     if (authorId === currentUser._id) {
       api.deletePostById(postId)
-       .then(() => navigate("/"))
+      //  .then(() => navigate("/"))
        .then(() => {
         setCards(prevState => {return prevState.filter(post => post._id !== postId)});
+        setFavorites(prevState => {return prevState.filter(post => post._id !== postId)});
+        setMyPosts(prevState => {return prevState.filter(post => post._id !== postId)});
        })
        
       } else {
       alert(`Твой ID - ${currentUser._id}, а автора - ${authorId}. Ты не можешь удалить его пост =(`)
     }
   }
+  
 
 
   return (
@@ -126,6 +130,7 @@ export const App = () => {
                 <CreatePostPage 
                   cards={cards}
                   setCards={setCards} 
+                  setMyPosts={setMyPosts}
                 />
               }
             />
@@ -134,6 +139,9 @@ export const App = () => {
               element={
                 <EditPostPage 
                   cards={cards}
+                  setCards={setCards}
+                  setMyPosts={setMyPosts}
+                  myPosts={myPosts}
                 />
               }
             />

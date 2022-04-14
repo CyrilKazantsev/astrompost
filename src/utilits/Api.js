@@ -52,35 +52,25 @@ class Api {
         }).then(onResponse).catch((err) => console.log(err))
     }
     
-    createPost(title, text, image, tags){
+    createPost(data){
         return fetch(`${this._baseUrl}/posts`, {
             method: "POST",
             headers: {
                 authorization: this._token,
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({
-                "title": `${title}`, // тип данных строка, обязательное
-                "text": `${text}`, // тип данных строка, обязательное
-                "image": `${image}`, // тип данных строка
-                "tags": [tags] //тип данных массив строк
-            })
+            body: JSON.stringify(data)
         }).then(onResponse).catch((err) => console.log(err))
     }
 
-    editPost(postId, title, text, image, tags){
+    editPost(data, postId){
         return fetch(`${this._baseUrl}/posts/${postId}`, {
             method: "PATCH",
             headers: {
                 authorization: this._token,
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({
-                "title": `${title}`, // тип данных строка, обязательное
-                "text": `${text}`, // тип данных строка, обязательное
-                "image": `${image}`, // тип данных строка
-                "tags": [tags] //тип данных массив строк
-            })
+            body: JSON.stringify(data)
         }).then(onResponse).catch((err) => console.log(err))
     }
 

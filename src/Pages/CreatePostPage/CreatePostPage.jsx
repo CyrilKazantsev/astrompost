@@ -7,7 +7,7 @@ import api from "../../utilits/Api";
 import FormTextarea from "../../components/FormTextarea";
 import { useNavigate } from "react-router-dom";
 
-export function CreatePostPage({children, setCards}) {
+export function CreatePostPage({children, setCards, setMyPosts}) {
   const navigate = useNavigate();
   const {
     register,
@@ -29,18 +29,21 @@ export function CreatePostPage({children, setCards}) {
     required: "Обязательное поле"
   });
 
-  const tagsRegister = register("tag");
+  const tagsRegister = register("tags");
 
-  const handleCreatePost = ({title, text, image = "", tags = ""}) => {
-    api.createPost(title, text, image, tags)
-        .then(() => navigate("/"))
-        .then(() => {
-          api.getPostsList().then(postsData => setCards(postsData))
+  // Функция создания поста
+  const handleCreatePost = (data) => {
+    data = {...data, tags: data.tags.split(",").map(tag => tag.trim())}
+    api.createPost(data)
+        .then(newCard => {
+          setCards(prevState => [...prevState, newCard])
+          setMyPosts(prevState => [...prevState, newCard]);
+          navigate(`/post/${newCard._id}`)
         })
         .catch( error => {
             console.log(error);
         })
-    }
+}
 
 
   return (
@@ -74,7 +77,7 @@ export function CreatePostPage({children, setCards}) {
       <FormInput
         {...imageRegister}
         id="image"
-        type="text"
+        type="url"
         placeholder="Ссылка на картинку"
       />
 
@@ -86,7 +89,7 @@ export function CreatePostPage({children, setCards}) {
 
         <FormInput
         {...tagsRegister}
-        id="title"
+        id="tags"
         type="text"
         placeholder="Теги"
       />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import { Form } from "../../components/Form";
@@ -6,21 +6,19 @@ import { FormInput } from "../../components/FormInput";
 import { FormButton } from "../../components/FormButton";
 import api from "../../utilits/Api";
 import FormTextarea from "../../components/FormTextarea";
-import { Button } from "@mui/material";
 
-export function EditPostPage({children, cards}) {
+export function EditPostPage({children, cards, setCards, setMyPosts, myPosts}) {
 
   const navigate = useNavigate()
   const [newCard, setNewCard] = useState()
   const { postID } = useParams();
-  useEffect(() => cards.map((card) => {
+  cards.map((card) => {
     if (card._id === postID && card._id !== newCard?._id) return setNewCard(card);
-  }))
+  })
 
   const {
     register,
     handleSubmit,
-    setValue
   } = useForm({
     mode: "onBlur",
   });
@@ -31,18 +29,23 @@ export function EditPostPage({children, cards}) {
 
   const imageRegister = register("image");
 
-  const tagsRegister = register("tag");
+  const tagsRegister = register("tags");
 
-const handleEditPost = ({title, text, image, tags = ""}) => {
-    api.editPost(postID, title, text, image, tags)
-        .then(() => navigate(-1))
-        .then(() => {
-         setCards()
-        })
-        .catch( error => {
-            console.log(error);
-        })
-    }
+// Функция редактирования поста
+const handleEditPost = (data) => {
+  data = {...data, tags: data.tags.split(",").map(tag => tag.trim())}
+    api.editPost(data, postID)
+    .then(newCard => {
+      const newCards = cards.map(card => card._id === postID ? newCard : card)
+      const myNewPosts = myPosts.map(card => card._id === postID ? newCard : card)
+      setCards(newCards)
+      setMyPosts(myNewPosts)
+      navigate(-1)
+    })
+    .catch( error => {
+      console.log(error);
+    })
+}
 
   return (
     <Form title="Редактирование поста" onSubmit={handleSubmit(handleEditPost)}>
@@ -50,6 +53,7 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
         {...titleRegister}
         id="title"
         type="text"
+        defaultValue={newCard?.title}
         placeholder="Заголовок"
       />
 
@@ -57,13 +61,15 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
               {...textRegister}
               id="text"
               type="text"
+              defaultValue={newCard?.text}
               placeholder="Описание"
       />
 
       <FormInput
         {...imageRegister}
-        id="title"
-        type="text"
+        id="image"
+        type="url"
+        defaultValue={newCard?.image}
         placeholder="Ссылка на картинку"
       />
 
@@ -71,6 +77,7 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
         {...tagsRegister}
         id="tags"
         type="text"
+        defaultValue={newCard?.tags}
         placeholder="Теги"
       />
 
@@ -79,12 +86,6 @@ const handleEditPost = ({title, text, image, tags = ""}) => {
       <FormButton type="submit" color="yellow">
         Редактировать пост
       </FormButton>
-      <Button className="btn" sx={{color: "black", width: "100%", borderRadius: "55px"}} onClick={() => {
-        setValue("title", newCard?.title), 
-        setValue("text", newCard?.text), 
-        setValue("image", newCard?.image)}}>
-        Восстановить изначальные данные
-      </Button>
     </Form>
   );
 }

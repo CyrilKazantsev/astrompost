@@ -41,7 +41,7 @@ export const PostValue = ({_id, likes, text, image, title, author, handlePostLik
             </div>
             {isDeleteable && <Link to={`/edit/${_id}`} className="card__link">
                 <div>
-                    <Button  sx={{color: "black"}} onClick={() => alert("Нажалось!")} className="btn" >Редактировать пост</Button>
+                    <Button  sx={{color: "black"}} className="btn" >Редактировать пост</Button>
                 </div>
             </Link>}
 
